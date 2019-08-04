@@ -60,6 +60,9 @@ Rails.application.configure do
 	#Devise
 	config.action_mailer.default_url_options = { host: 'localhost', port: 3_000 }
 
+	#PaperClip
+	Paperclip.options[:command_path] = "/usr/local/bin/"
+
 	# routes, locales, etc. This feature depends on the listen gem.
 	config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
