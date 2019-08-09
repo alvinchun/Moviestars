@@ -39,17 +39,9 @@
       </li>
 
       <% if user_signed_in? %>
-        <li><%= link_to 'Add Play', new_play_path %></li>
+        <li><%= link_to 'Add Movie', new_play_path %></li>
       <% end %>
     </ul>
-
-    <ul class="nav navbar-nav">
-    <% if user_signed_in? %>
-    <li><%= link_to 'Add Movie', new_play_path %></li>
-    <% end %>
-
-    </ul>
-
   </div>
 </nav>
 
