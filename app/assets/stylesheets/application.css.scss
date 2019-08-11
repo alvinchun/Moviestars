@@ -221,6 +221,10 @@ p.notice {
 	// // box-shadow: 1px 1px 3px 4px rgb(114, 112, 112);
 	// padding: 0.6em 0.6em;
 
+	.no-plays {
+		color: white;
+	}
+
 	.play-title {
 		color: white;
 		margin-top: 0;
@@ -267,6 +271,7 @@ p.notice {
 /* current-category styles */
 
 .current-category {
+	color: whitesmoke;
 	margin-bottom: 40px;
 }
 
