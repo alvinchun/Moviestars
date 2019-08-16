@@ -16,6 +16,7 @@ Movie rating CRUD app for users to add and rate movies with fully user authentic
 - Paperclip
 - Simple-form
 - jQuery Rails
+- AWS S3 Cloud
 - Test Driven Development (TDD with rspec and capybara)
 
 ## Included Features
@@ -67,9 +68,16 @@ I feel this project would be especially useful to people who want to save their 
 
 But there are few more features I want to add. I want to add more features such as add an function that leads postings posts into calender component to see better and easy view of when the gatherings are on. For authentication functionality, I was trying to use the auth0 library but still working on it.
 
+##Problems during the project
+
+Uploading images directly from public/images file to heroku didn't work. On heroku, each dyno gets its own ephemeral filesystem, with a fresh copy of the most recently deployed code. During the dyno’s lifetime its running processes can use the filesystem as a temporary scratchpad, but no files that are written are visible to processes in any other dyno and any files written will be discarded the moment the dyno is stopped or restarted. so I decided to use S3 for the cloud storage where I can keep the image even though the dyno on heroku restarts.
+
 ## Wireframes:
 
-![Homepage](./Wireframes/Homepage.png)
-![Allpage](./Wireframes/Allpage.png)
-![Createpage](./Wireframes/Createpage.png)
-![Showpage](./Wireframes/Showpage.png)
+![root#index-page](./public/image/root-index-page-with-category-sort.png)
+![create-page](./public/image/create-page.png)
+![heroku-dyno-problem](./public/image/images-rendering-errors-heroku.png)
+![login-page](./public/image/login-page.png)
+![no-category-matching-movies-page](./public/image/no-category-available-page.png)
+![show-page](./public/image/show-page.png)
+![sign-up-page](./public/image/sign-up-page.png)
