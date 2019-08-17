@@ -28,23 +28,37 @@ Movie rating CRUD app for users to add and rate movies with fully user authentic
 
 ## Ruby on Rails setup
 
-`rails new Moviestars --database=postgresql`
+`$ rails new Moviestars --database=postgresql`
 
 This command will generate all the boiler plate of ruby on rails application with postgresql database.
 
 ## CRUD Movies Algorithm
 
-We can run to create Movie model by running:
+![root#index-page](./public/image/root-index-page-with-category-sort.png)
+![no-category-matching-movies-page](./public/image/no-category-available-page.png)
+![show-page](./public/image/show-page.png)
+![create-page](./public/image/create-page.png)
+![edit-page](./public/image/edit-page.png)
 
-`rails generate model Movie title:string description:text director:string`
+We can run to generate models by running:
 
-and we can migrate migration file by running:
+`$ rails generate model Play title:string description:text director:string`
 
-`rails db:migrate`
+`$ rails generate model Review rating:integer comment:text`
+
+`$ rails generate model Category name:string`
+
+and we can generate migration files as following the relations by running:
+
+`$ rails generate migration ...`
+
+And then migration those migration files in to schema.rb by running
+
+`$ rails db:migrate`
 
 We can create controller by running:
 
-`rails generate controller Movies`
+`$ rails generate controller Movies`
 
 The controller where we can control our model and view to create CRUD functionalities.
 
@@ -52,32 +66,73 @@ The controller where we can control our model and view to create CRUD functional
 
 These methods can be used to generate each CRUD functionalities.
 
-And same for CRUD functionalities with ratings as well.
+And same for CRUD functionalities with reviews as well. You can find more details in the app/controllers repository.
 
-## User Stories:
+![MVC-image](./public/image/MVC-pattern.png)
 
-New Gathering Page: As a user I want to be able to create a new gathering with specific information (title, description, date, time, latitude and longitude)
+## Models relations
 
-See All Page: As a user I want to be able to see all gatherings I posted
+Play belongs to user and category and has many reviews
 
-Edit Page: As a user I want to be able to update a information (title, description, date, time, latitude and longitude) to reflect my current needs
+```ruby
+class Play < ApplicationRecord
+	belongs_to :user
+	belongs_to :category
+	has_many :reviews
+end
+```
 
-Delete Functionality: As a user I want to be able to delete a gathering plan if I no longer need it/if it is no longer available
+Review belongs to play and user
 
-I feel this project would be especially useful to people who want to save their gatherings/plans with specific location information showing on the google map.
+```ruby
+class Review < ApplicationRecord
+	belongs_to :play
+	belongs_to :user
+end
+```
 
-But there are few more features I want to add. I want to add more features such as add an function that leads postings posts into calender component to see better and easy view of when the gatherings are on. For authentication functionality, I was trying to use the auth0 library but still working on it.
+Category has many plays
+
+```ruby
+class Category < ApplicationRecord
+	has_many :plays
+end
+```
+
+## Authentication set up
+
+As following the documentation from devise github:
+
+we can run
+
+`$ rails generate devise:install`
+
+`$ rails generate devise User`
+
+`$ rails db:migrate`
+
+would add devise methods as below, and we can also add relations to plays and reviews.
+
+```ruby
+class User < ApplicationRecord
+	has_many :plays
+	has_many :reviews
+	# Include default devise modules. Others available are:
+	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+	devise :database_authenticatable,
+	       :registerable,
+	       :recoverable,
+	       :rememberable,
+	       :validatable
+end
+```
+
+And with devise gem setup, setting User model has many plays and reviews in User.rb file.
 
 ##Problems during the project
 
-Uploading images directly from public/images file to heroku didn't work. On heroku, each dyno gets its own ephemeral filesystem, with a fresh copy of the most recently deployed code. During the dyno’s lifetime its running processes can use the filesystem as a temporary scratchpad, but no files that are written are visible to processes in any other dyno and any files written will be discarded the moment the dyno is stopped or restarted. so I decided to use S3 for the cloud storage where I can keep the image even though the dyno on heroku restarts.
+![heroku-dyno-problem](./public/image/images-rendering-errors-heroku.png)
+
+Uploading images directly from public/images file to heroku didn't work. On heroku, each dyno gets its own ephemeral filesystem, with a fresh copy of the most recently deployed code. During the dyno’s lifetime its running processes can use the filesystem as a temporary scratchpad, but no files that are written are visible to processes in any other dyno and any files written will be discarded the moment the dyno is stopped or restarted. so I decided to use AWS S3 for the cloud storage where I can keep the image even though the dyno on heroku restarts.
 
 ## Wireframes:
-
-![root#index-page](./public/image/root-index-page-with-category-sort.png)
-![create-page](./public/image/create-page.png)
-![heroku-dyno-problem](./public/image/images-rendering-errors-heroku.png)
-![login-page](./public/image/login-page.png)
-![no-category-matching-movies-page](./public/image/no-category-available-page.png)
-![show-page](./public/image/show-page.png)
-![sign-up-page](./public/image/sign-up-page.png)
