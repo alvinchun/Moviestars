@@ -129,10 +129,10 @@ end
 
 And with devise gem setup, setting User model has many plays and reviews in User.rb file.
 
-##Problems during the project
+## Problems during the project
 
 ![heroku-dyno-problem](./public/image/images-rendering-errors-heroku.png)
 
 Uploading images directly from public/images file to heroku didn't work. On heroku, each dyno gets its own ephemeral filesystem, with a fresh copy of the most recently deployed code. During the dyno’s lifetime its running processes can use the filesystem as a temporary scratchpad, but no files that are written are visible to processes in any other dyno and any files written will be discarded the moment the dyno is stopped or restarted. so I decided to use AWS S3 for the cloud storage where I can keep the image even though the dyno on heroku restarts.
 
-## Wireframes:
+## Test Driven Development:
