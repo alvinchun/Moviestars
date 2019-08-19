@@ -129,7 +129,7 @@ end
 
 And with devise gem setup, setting User model has many plays and reviews in User.rb file.
 
-## Problems during the project
+## Problems
 
 ![heroku-dyno-problem](./public/image/images-rendering-errors-heroku.png)
 
